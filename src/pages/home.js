@@ -13,17 +13,20 @@ function Home() {
     });
   }
 
-  function handleInputChange(event) {
+  function handleFilterInput(event) {
     event.preventDefault();
 
     const value = event.target.value;
+    let filteredUsers = [];
 
-    setUserInput(value);
+    employees.forEach(employee => {
+      if(employee.name.last === value){
+          filteredUsers.push(employee);
+      }
+    })
+    setFilteredEmployees(filteredUsers);
   }
 
-  function filterEmployees() {
-    setFilteredEmployees(employees.filter((element) => element.name.last.includes(userInput)));
-  }
 
   useEffect(() => {
     loadEmployees();
@@ -40,16 +43,19 @@ function Home() {
         <div className="row">
           <div className="col">
             <input
-              name="filter"
-              value={userInput}
-              onChange={handleInputChange}
-              onBlur={filterEmployees}
+              onChange={handleFilterInput}
             ></input>
           </div>
         </div>
         <div className="row">
           <div className="col">
-            <EmployeeTable employees={employees} />
+            {filteredEmployees.length > 0 ? (
+              <EmployeeTable employees={filteredEmployees} />
+            ) : (
+              <EmployeeTable
+                employees={employees}
+              />
+            )}
           </div>
         </div>
       </div>

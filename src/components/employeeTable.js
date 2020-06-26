@@ -1,6 +1,20 @@
 import React from "react";
 
 function EmployeeTable(props) {
+
+  function renderEmployeeList(employees){
+    return employees.map((employee) => {
+      return (
+        <tr key={employee.cell}>
+          <td>{employee.name.first}</td>
+          <td>{employee.name.last}</td>
+          <td>{employee.email}</td>
+          <td>{employee.cell}</td>
+        </tr>
+      );
+    })
+  }
+
   return (
     <>
       <table className="table">
@@ -13,17 +27,7 @@ function EmployeeTable(props) {
           </tr>
         </thead>
         <tbody>
-          {props.employees.map((employee) => {
-            console.log(employee);
-            return (
-              <tr key={employee.cell}>
-                <td>{employee.name.first}</td>
-                <td>{employee.name.last}</td>
-                <td>{employee.email}</td>
-                <td>{employee.cell}</td>
-              </tr>
-            );
-          })}
+          {renderEmployeeList(props.employees)}  
         </tbody>
       </table>
     </>
